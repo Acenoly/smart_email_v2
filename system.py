@@ -10,6 +10,7 @@ import NB_init_data
 import classifier
 import pickle
 import relearning
+import system_without_relearning
 
 def initSystem():
     file_object = open("./data/test.txt",encoding="utf-8")
@@ -27,7 +28,6 @@ def initSystem():
         LabelArray.append(1)
 
     LabelArray[len(LabelArray)-1] = 0
-    print(TokenArray)
 
     file_object.close()
     NB_init_data.init_nb_database(TokenArray, LabelArray)
@@ -47,7 +47,7 @@ def runSystem():
     r_result = []
 
     # repetition threshold
-    threshold = 4
+    threshold = 2
     mistake_times = 0
 
     # Relearning
@@ -65,10 +65,6 @@ def runSystem():
         TokenArray.append(filter_array)
         r_result.append(lineSpArray[0])
 
-        print(filter_array)
-        print("what")
-        print(classifier.classifier(filter_array))
-        print(lineSpArray[0])
         real_chonse = int(lineSpArray[0])
 
         if classifier.classifier(filter_array) == real_chonse:
@@ -87,8 +83,6 @@ def runSystem():
                     mistakeWord.append(w)
 
             # Caculate mistake repetition
-            print(mistakeWord)
-            print(repetitison)
             relearning_lists = []
 
             for x in range(len(mistakeWord)):
@@ -104,6 +98,16 @@ def runSystem():
 
 if __name__ == '__main__':
     #初始化系统
-    #initSystem()
+    print("init system")
+    initSystem()
+    print("Mistakes: ", end="")
+    system_without_relearning.runSystem()
+    print("Begin relearning")
+    print("relearning times or conflict times: ", end="")
     runSystem()
+    print("After relearning")
+    print("Mistakes: ", end="")
+    system_without_relearning.runSystem()
+
+
 

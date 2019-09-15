@@ -85,8 +85,6 @@ def realearning(post_list, train_label_list, learning_rate):
 
     k1, k2, Loss = nb_with_k.nbk_train_with_n(mat, K1, mat2, K2, y, learning_rate)
 
-    print(Loss)
-
     for x in range(len(post_list)):
         utili.kb_sql.change_weights(word=post_list[x], weights=K1[x], word_class=0, conflict=0)
         utili.kb_sql.change_weights(word=post_list[x], weights=K2[x], word_class=1, conflict=0)

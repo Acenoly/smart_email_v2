@@ -28,7 +28,6 @@ def initSystem():
         LabelArray.append(1)
 
     LabelArray[len(LabelArray) - 1] = 0
-    print(TokenArray)
 
     file_object.close()
     NB_init_data.init_nb_database(TokenArray, LabelArray)
@@ -38,9 +37,6 @@ def initSystem():
 
 
 def runSystem():
-    f = open('my_classifier.pickle', 'rb')
-    corpus = pickle.load(f)
-    f.close()
 
     file_object = open("./data/test_p", encoding="utf-8")
     TokenArray = []
@@ -48,7 +44,6 @@ def runSystem():
     r_result = []
 
     # repetition threshold
-    threshold = 4
     conflict_number = 0
 
     # Relearning
@@ -66,41 +61,13 @@ def runSystem():
         TokenArray.append(filter_array)
         r_result.append(lineSpArray[0])
 
-        print(filter_array)
-        print("what")
-        print(classifier.classifier(filter_array))
-        print(lineSpArray[0])
-
         if classifier.classifier(filter_array) == int(lineSpArray[0]):
             pass
         else:
             conflict_number+=1
 
-        print(conflict_number)
+    print(conflict_number)
 
-            # inconsistency
-            # remember mistake
-            # repetitison = []
-            # mistakeWord = []
-            # for w in filter_array:
-            #     f = corpus.tf_idf(w, filter_array)
-            #     if f > 0.9:
-            #         repetitison.append(utili.ltm_sql.update(w, lineSpArray[0]))
-            #         mistakeWord.append(w)
-            #
-            # # Caculate mistake repetition
-            # print(mistakeWord)
-            # print(repetitison)
-            # relearning_lists = []
-            #
-            # for x in range(len(mistakeWord)):
-            #     # Greater than threshold
-            #     if (repetitison[x] > threshold):
-            #         # remember in relearning_lists
-            #         relearning_lists.append(mistakeWord[x])
-            #
-            # # relearning
-            # relearning.realearning(relearning_lists, lineSpArray[0], 10)
 
 
 if __name__ == '__main__':
